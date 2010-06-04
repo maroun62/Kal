@@ -78,7 +78,14 @@
   NSDateComponents *c = [self.baseDate cc_componentsForMonthDayAndYear];
   c.day = [self.baseDate cc_numberOfDaysInMonth];
   NSDate *lastDayOfTheMonth = [[NSCalendar currentCalendar] dateFromComponents:c];
-  return 7 - [lastDayOfTheMonth cc_weekday];
+NSUInteger a = 7 - [lastDayOfTheMonth cc_weekday];
+	//Fixed Bug by Maroun Daher for Simulators 3.1.2 and less
+	NSInteger b = (NSInteger) a;
+	if(c.month == 3 && b<0){
+	a = 14 - [lastDayOfTheMonth cc_weekday];	
+	}
+	NSLog(@"a= %d",a);
+  return a;
 }
 
 - (NSArray *)calculateDaysInFinalWeekOfPreviousMonth
